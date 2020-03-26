@@ -27,8 +27,8 @@
 						<!-- <td>{{ book.id }}</td> -->
 						<td>{{ book.name }}</td>
 						<td>{{ book.author }}</td>
-						<td>{{ book.created_at }}</td>
-						<td>{{ book.updated_at }}</td>
+						<td>{{ book.created_at | formatDate }}</td>
+						<td>{{ book.updated_at | formatDate }}</td>
 						<td class="text-center">
 							<div class="btn-group" role="group">
 								<router-link :to="{name: 'edit', params: { id: book.id }}" class="btn btn-primary">Edit</router-link>
@@ -38,6 +38,17 @@
 					</tr>
 				</tbody>
 			</table>
+			<nav v-show="lenArrayBook>3">
+				<ul class="pagination">
+					<li class="page-item">
+						<button @click="fetchBooks(prevPage)" class="page-link" href="#">Previous</button>
+					</li>
+
+					<li class="page-item">
+						<button @click="fetchBooks(nextPage)" class="page-link" href="#">Next</button>
+					</li>
+				</ul>
+			</nav>
 		</div>
 	</div>
 </template>
@@ -46,15 +57,25 @@
 export default {
 	data() {
 		return {
-			books: []
+			books: [],
+			nextPage: null,
+			prevPage: null,
+			lenArrayBook: null
 		};
 	},
 	created() {
-		this.axios.get("http://localhost:8000/api/books").then(response => {
-			this.books = response.data;
-		});
+		this.fetchBooks("http://localhost:8000/api/books");
 	},
 	methods: {
+		fetchBooks(url) {
+			this.axios.get(url).then(response => {
+				console.log(response.data);
+				this.books = response.data.data;
+				this.lenArrayBook = response.data.total;
+				this.nextPage = response.data.next_page_url;
+				this.prevPage = response.data.prev_page_url;
+			});
+		},
 		deleteBook(id) {
 			this.axios
 				.delete(`http://localhost:8000/api/book/delete/${id}`)
@@ -62,6 +83,9 @@ export default {
 					let i = this.books.map(item => item.id).indexOf(id); // find index of your object
 					this.books.splice(i, 1);
 				});
+			if (this.nextPage == null && this.books.length == 0) {
+				this.fetchBooks(this.prevPage);
+			}
 		}
 	}
 };

@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet" />
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between">
 			<router-link to="/" class="navbar-brand">
 				<img class="logo" src="../../public/images/logo.png" alt="mind-dev-info" />
 				<span class="h5">MDI-Tutorials</span>
@@ -20,6 +20,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<div class="navbar-nav me-navbar">
 					<router-link to="/" class="nav-item nav-link">Home</router-link>
+					<router-link to="/search-and-reading-books" class="nav-item nav-link">Read Books</router-link>
 				</div>
 			</div>
 		</nav>
@@ -47,6 +48,7 @@
 			<span class="text-secondary">Laravel & Vue & Bootstrap CRUD Single Page Application</span>
 		</div>
 		<br />
+
 		<transition name="fade">
 			<router-view></router-view>
 		</transition>

@@ -1,9 +1,9 @@
 import AllBooks from './components/AllBooks.vue';
 import AddBook from './components/AddBook.vue';
 import EditBook from './components/EditBook.vue';
+import ReadBook from './components/SearchBooks.vue';
 
-export const routes = [
-    {
+export const routes = [{
         name: 'home',
         path: '/',
         component: AllBooks
@@ -17,5 +17,10 @@ export const routes = [
         name: 'edit',
         path: '/edit/:id',
         component: EditBook
+    },
+    {
+        name: 'read',
+        path: '/search-and-reading-books',
+        component: ReadBook
     }
 ];

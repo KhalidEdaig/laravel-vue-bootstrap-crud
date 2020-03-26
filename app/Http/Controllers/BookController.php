@@ -11,7 +11,7 @@ class BookController extends Controller
     // all books
     public function index()
     {
-        $books = Book::all()->toArray();
+        $books = Book::paginate(3)->toArray();
         return array_reverse($books);
     }
 
